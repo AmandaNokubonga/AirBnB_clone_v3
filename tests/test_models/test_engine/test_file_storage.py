@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-Contains the TestFileStorageDocs classes
-"""
+"""Contains the TestFileStorageDocs classes"""
 
 from datetime import datetime
 import inspect
@@ -116,15 +114,29 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
-        """Test to properly returns the requested object"""
-        storage = FileStorage()
-        user = User(name="Usr1")
-        user.save()
-        self.assertEqual(user, storage.get("User", user.id))
+        """Test a method to properly return the requested object"""
+        self.storage = FileStorage()
+        self.storage.reload()
+        dic = {"name": "Ciundad"}
+        instance = State(**dic)
+        self.storage.new(instance)
+        self.storage.save()
+        self.storage = FileStorage()
+        get_instance = self.storage.get(State, instance.id)
+        self.assertEqual(get_instance, instance)
+
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
         """Test to count properly all objects in a database"""
-        storage = FileStorage()
-        db_objs = len(storage._FileStorage__objects)
-        self.assertEqual(db_objs, storage.count())
+        self.storage = FileStorage()
+        self.storage.reload()
+        dic = {"name": "Dallas"}
+        state = State(**dic)
+        self.storage.new(state)
+        dic = {"name": "New"}
+        city = City(**dic)
+        self.storage.new(city)
+        self.storage.save()
+        counter = self.storage.count()
+        self.assertEqual(len(self.storage.all()), counter)
