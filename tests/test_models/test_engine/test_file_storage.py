@@ -117,8 +117,8 @@ class TestFileStorage(unittest.TestCase):
         """Test a method to properly return the requested object"""
         self.storage = FileStorage()
         self.storage.reload()
-        dic = {"name": "Ciundad"}
-        instance = State(**dic)
+        diclib = {"name": "Ciundad"}
+        instance = State(**diclib)
         self.storage.new(instance)
         self.storage.save()
         self.storage = FileStorage()
@@ -131,11 +131,11 @@ class TestFileStorage(unittest.TestCase):
         """Test to count properly all objects in a database"""
         self.storage = FileStorage()
         self.storage.reload()
-        dic = {"name": "Dallas"}
-        state = State(**dic)
+        diclib = {"name": "Dallas"}
+        state = State(**diclib)
         self.storage.new(state)
-        dic = {"name": "New"}
-        city = City(**dic)
+        diclib = {"name": "New"}
+        city = City(**diclib)
         self.storage.new(city)
         self.storage.save()
         counter = self.storage.count()

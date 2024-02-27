@@ -92,8 +92,8 @@ class TestFileStorage(unittest.TestCase):
         """Test to properly return a requested object from a database"""
         storage = DBStorage
         storage.reload()
-        dic = {"name": "Amacol"}
-        instance = State(**dic)
+        diclib = {"name": "Amacol"}
+        instance = State(**diclib)
         storage.new(instance)
         storage.save()
         get_instance = storage.get(State, instance.id)
@@ -104,11 +104,11 @@ class TestFileStorage(unittest.TestCase):
         """Test method to properly count all objects in a database"""
         storage = DBStorage
         storage.reload()
-        dic = {"name": "Ciudad"}
-        state = State(**dic)
+        diclib = {"name": "Ciudad"}
+        state = State(**diclib)
         storage.new(state)
-        dic = {"name": "Mexico", "state_id": state.id}
-        city = City(**dic)
+        diclib = {"name": "Mexico", "state_id": state.id}
+        city = City(**diclib)
         storage.new(city)
         storage.save()
         counter = storage.count()
