@@ -1,4 +1,4 @@
-w#!/usr/bin/python3
+#!/usr/bin/python3
 """
     Fabric script that creates and distributes an archive
     on my web servers, using deploy function
@@ -7,6 +7,7 @@ from fabric.api import *
 from fabric.operations import run, put, sudo, local
 from datetime import datetime
 import os
+from fabric.exceptions import CommandError
 
 env.hosts = ['66.70.184.249', '54.210.138.75']
 created_path = None
@@ -23,7 +24,7 @@ def do_pack():
         local("tar --create --verbose -z --file={} ./web_static"
               .format(file_name))
         return file_name
-    except:
+    except CommandError as e:
         return None
 
 
@@ -50,7 +51,7 @@ def do_deploy(archive_path):
         run("ln -sf {}/{} /data/web_static/current"
             .format(path, folder[0]))
         return True
-    except:
+    except CommandError as e:
         return False
 
 
